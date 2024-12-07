@@ -7,17 +7,23 @@ import 'package:intl/intl.dart';
 
 import 'package:news_app/view_model/NewViewModel.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
+enum NewsFilterList {
+  bbcNews,aryNews,independent,reuters,cnn,alJazeera
+}
 class _HomeScreenState extends State<HomeScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
+  NewsFilterList? selectedMenu;
 
   final format = DateFormat('MMMM dd,yyyy');
+  String name = 'bbc-news';
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height * 1;
@@ -36,6 +42,40 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text('News',
                 style: GoogleFonts.poppins(
                     fontSize: 24, fontWeight: FontWeight.w700))),
+        actions: [
+          PopupMenuButton<NewsFilterList>(
+            initialValue: selectedMenu,
+              onSelected: (NewsFilterList item){
+                  if(NewsFilterList.bbcNews.name==item.name){
+                    name = 'bbc-news';
+                  }
+                  if(NewsFilterList.aryNews.name==item.name){
+                    name = 'ary-news';
+                  }
+                  if(NewsFilterList.alJazeera.name==item.name){
+                    name = 'al-jazeera-english';
+                  }
+
+                  setState(() {
+                    selectedMenu=item;
+                  });
+              },
+              itemBuilder:(BuildContext context )=>  <PopupMenuEntry<NewsFilterList>>[
+                  const PopupMenuItem<NewsFilterList>(
+                    value: NewsFilterList.bbcNews,
+                      child:Text('BBC News')
+                  ),
+                  const PopupMenuItem<NewsFilterList>(
+                    value: NewsFilterList.aryNews,
+                    child:Text('Ary News')
+                  ),
+                  const PopupMenuItem<NewsFilterList>(
+                      value: NewsFilterList.alJazeera,
+                      child:Text('Aljazeera')
+                  ),
+              ]
+          )
+        ],
       ),
       body: ListView(
         children: [
@@ -43,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: height * .55,
               width: width * 55,
               child: FutureBuilder<NewsHeadlineResponse>(
-                  future: newsViewModel.fetchNewChannelHeadline(),
+                  future: newsViewModel.fetchNewChannelHeadline(source: name),
                   builder: (BuildContext context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(

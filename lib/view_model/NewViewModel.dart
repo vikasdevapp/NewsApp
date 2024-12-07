@@ -3,10 +3,10 @@ import 'package:news_app/repository/news_repository.dart';
 
 class NewsViewModel{
 
-  final _repo=NewsRepository();
+  final newsRepos=NewsRepository();
 
-  Future<NewsHeadlineResponse> fetchNewChannelHeadline() async{
-    final response=await _repo.fetchHeadlineResponse();
+  Future<NewsHeadlineResponse> fetchNewChannelHeadline({String source = 'bbc-news'}) async{
+    final response=await newsRepos.fetchHeadlineResponse(source: source);
     return response;
   }
 }

@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 
 class NewsRepository {
 
-  Future<NewsHeadlineResponse> fetchHeadlineResponse() async {
-    String url = "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=fd5d9c1983c2488e99a31e654b290c8b";
+  Future<NewsHeadlineResponse> fetchHeadlineResponse({String source = 'bbc-news'}) async {
+    String url = "https://newsapi.org/v2/top-headlines?sources=$source&apiKey=fd5d9c1983c2488e99a31e654b290c8b";
 
       final response = await http.get(Uri.parse(url));
 
