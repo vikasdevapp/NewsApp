@@ -6,7 +6,7 @@ class NewsViewModel{
   final newsRepos=NewsRepository();
 
   Future<NewsHeadlineResponse> fetchNewChannelHeadline({String source = 'bbc-news'}) async{
-    final response=await newsRepos.fetchHeadlineResponse(source: source);
+    final response = await newsRepos.fetchHeadlineResponse(source: source);
     return response;
   }
 }

@@ -2,9 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:news_app/Routes/routes_name.dart';
 import 'package:news_app/models/news_headline_response.dart';
 import 'package:intl/intl.dart';
-
+import 'package:news_app/screens/categories_screen.dart';
 import 'package:news_app/view_model/NewViewModel.dart';
 
 
@@ -18,9 +19,9 @@ enum NewsFilterList {
   bbcNews,aryNews,independent,reuters,cnn,alJazeera
 }
 class _HomeScreenState extends State<HomeScreen> {
+
   NewsViewModel newsViewModel = NewsViewModel();
   NewsFilterList? selectedMenu;
-
   final format = DateFormat('MMMM dd,yyyy');
   String name = 'bbc-news';
 
@@ -32,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,MaterialPageRoute(builder: (context)=>CategoriesScreen()));
+            },
             icon: Image.asset(
               'images/category_icon.png',
               width: 30,
@@ -134,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Container(
-                                        padding: EdgeInsets.all(15),
+                                        padding: const EdgeInsets.all(15),
                                         height: height*0.22,
                                         alignment: Alignment.bottomCenter,
                                         child: Column(
@@ -160,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                               ),
                                             ),
-                                            Spacer(),
+                                            const Spacer(),
                                             Container(
                                               width: width*0.35,
                                               child: Row(
